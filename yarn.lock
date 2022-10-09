@@ -2664,6 +2664,13 @@
   "resolved" "https://registry.npmjs.org/@types/qs/-/qs-6.9.7.tgz"
   "version" "6.9.7"
 
+"@types/react-content-loader@^4.0.0":
+  "integrity" "sha512-q06iajQsGE/fi08W7bchIX2C/dgKLMU4KLAWQOeF9WZFmXd6SeRdSjO9Z/grXaKXnjFW6+P7l6/BlN9kvO2v2A=="
+  "resolved" "https://registry.npmjs.org/@types/react-content-loader/-/react-content-loader-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "react-content-loader" "*"
+
 "@types/react-dom@18.0.6":
   "integrity" "sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.6.tgz"
@@ -8970,7 +8977,7 @@
     "loader-utils" "^2.0.0"
     "schema-utils" "^3.0.0"
 
-"react-content-loader@^6.2.0":
+"react-content-loader@*", "react-content-loader@^6.2.0":
   "integrity" "sha512-r1dI6S+uHNLW68qraLE2njJYOuy6976PpCExuCZUcABWbfnF3FMcmuESRI8L4Bj45wnZ7n8g71hkPLzbma7/Cw=="
   "resolved" "https://registry.npmjs.org/react-content-loader/-/react-content-loader-6.2.0.tgz"
   "version" "6.2.0"
