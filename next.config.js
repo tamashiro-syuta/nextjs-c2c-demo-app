@@ -5,18 +5,18 @@ const nextConfig = {
     let compilerConfig = {
       // styled-componentsの有効化
       styledComponents: true,
-    };
+    }
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       compilerConfig = {
         ...compilerConfig,
         // 本番環境では、ReactTestingLibraryで使用するdata-testid属性を削除
-        reactRemoveProperties: { properties: ["^data-testid$"] },
-      };
+        reactRemoveProperties: { properties: ['^data-testid$'] },
+      }
     }
 
-    return compilerConfig;
+    return compilerConfig
   })(),
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
