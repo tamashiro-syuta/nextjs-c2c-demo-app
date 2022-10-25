@@ -27,7 +27,7 @@ const DropdownValue = styled.div`
 // ドロップダウンプレースホルダー
 const DropdownPlaceholder = styled.div`
   color: #757575;
-  font-size: ${({ theme }) => theme.fontSize[1]};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
   min-height: 20px;
   line-height: 20px;
 `
@@ -77,8 +77,144 @@ interface DropdownItemProps {
   item: DropdownItem
 }
 
+/**
+ * ドロップダウンの選択した要素
+ */
 const DropdownItem = (props: DropdownItemProps) => {
   const { item } = props
 
-  return <Flex alignItems="center">{/* 続きここから */}</Flex>
+  return (
+    <Flex alignItems="center">
+      <Text margin={0} variant="small">
+        {item.label ?? item.value}
+      </Text>
+    </Flex>
+  )
 }
+
+export interface DropdownItem {
+  value: string | number | null
+  label?: string
+}
+
+interface DropdownProps {
+  // ドロップダウンの選択肢
+  options: DropdownItem[]
+  // ドロップダウンの値
+  value?: string | number
+  //<input /> のname属
+  name?: string
+  // プレースホルダー
+  placeholder?: string
+  // バリデーションのエラーフラグ
+  hasError?: boolean
+  // 値が変化した時のイベントハンドラ
+  onChange?: (selected?: DropdownItem) => void
+}
+
+/**
+ * ドロップダウン
+ */
+const Dropdown = (props: DropdownProps) => {
+  const { onChange, name, options, hasError } = props
+  const initialItem = options.find((i) => i.value === props.value)
+  const [isOpen, setIsOpenValue] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(initialItem)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // useCallbackでクリック時の関数をメモ化
+  const handleDocumentClick = useCallback(
+    (e: MouseEvent | TouchEvent) => {
+      //自分自身をクリックした場合は、何もしない
+      if (dropdownRef.current) {
+        const elems = dropdownRef.current.querySelectorAll('*')
+
+        for (let i = 0; i < elems.length; i++) {
+          if (elems[i] == e.target) return
+        }
+      }
+      setIsOpenValue(false)
+    },
+    [dropdownRef],
+  )
+
+  // マウスダウンした時にドロップダウンを開く
+  const handleMouseDown = (e: React.SyntheticEvent) => {
+    setIsOpenValue((isOpen) => !isOpen)
+    e.stopPropagation()
+  }
+
+  // ドロップダウンから選択した時
+  const handleSelectValue = (
+    e: React.FormEvent<HTMLDivElement>,
+    item: DropdownItem,
+  ) => {
+    e.stopPropagation()
+
+    // アイテムを選択
+    setSelectedItem(item)
+    // 閉じる
+    setIsOpenValue(false)
+    // onChangeがあれば、実行
+    onChange && onChange(item)
+  }
+
+  useEffect(() => {
+    // 画面外のクリックとタッチイベントを設定
+    document.addEventListener('click', handleDocumentClick, false)
+    document.addEventListener('touchend', handleDocumentClick, false)
+
+    return function cleanup() {
+      document.removeEventListener('click', handleDocumentClick, false)
+      document.removeEventListener('touchend', handleDocumentClick, false)
+    }
+
+    // 最初だけ呼び出す
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return (
+    <DropdownRoot ref={dropdownRef}>
+      <DropdownControl
+        hasEroor={hasError}
+        onMouseDown={handleMouseDown}
+        onTouchEnd={handleMouseDown}
+      >
+        {/* アイテムが選択されている時は、それを表示 */}
+        {selectedItem && (
+          <DropdownValue>
+            <DropdownItem item={selectedItem} />
+          </DropdownValue>
+        )}
+        {/* 選択されていない時は、プレースホルダーを表示 */}
+        {!selectedItem && (
+          <DropdownPlaceholder>{props.placeholder}</DropdownPlaceholder>
+        )}
+        {/* ダミー input */}
+        <input
+          type="hidden"
+          name={name}
+          value={selectedItem?.value ?? ''}
+          onChange={() => onChange && onChange(selectedItem)}
+        />
+        <DropdownArrow isOpen={isOpen} />
+      </DropdownControl>
+      {/* ドロップダウンを表示 */}
+      {isOpen && (
+        <DropdownMenu>
+          {props.options.map((item, idx) => (
+            <DropdownOption
+              key={idx}
+              onMouseDown={(e) => handleSelectValue(e, item)}
+              onClick={(e) => handleSelectValue(e, item)}
+            >
+              <DropdownItem item={item} />
+            </DropdownOption>
+          ))}
+        </DropdownMenu>
+      )}
+    </DropdownRoot>
+  )
+}
+
+export default Dropdown
