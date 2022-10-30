@@ -116,7 +116,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
   const [clothesProducts, bookProducts, shoesProducts] = await Promise.all([
     getAllProducts(context, { category: 'clothes', limit: 6, page: 1}),
-    getAllProducts(context, { category: 'books', limit: 6, page: 1 }),
+    getAllProducts(context, { category: 'book', limit: 6, page: 1 }),
     getAllProducts(context, { category: 'shoes', limit: 6, page: 1})
   ])
 
