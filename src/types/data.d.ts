@@ -21,7 +21,7 @@ export type Product = {
   title: string
   description: string
   imageUrl: string
-  blurDateUrl: string
+  blurDataUrl: string
   price: number
   condition: Condition
   owner: User

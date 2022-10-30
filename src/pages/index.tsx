@@ -29,7 +29,7 @@ const HomePage: NextPage<HomePageProps> = ({
                   title={p.title}
                   price={p.price}
                   imageUrl={p.imageUrl}
-                  blurDataUrl={p.blurDateUrl}
+                  blurDataUrl={p.blurDataUrl}
                 />
               </a>
             </Link>
