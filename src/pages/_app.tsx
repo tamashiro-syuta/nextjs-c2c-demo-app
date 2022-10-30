@@ -1,7 +1,8 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { theme } from 'themes'
 
 const GlobalStyles = createGlobalStyle`
   html,
@@ -30,7 +31,7 @@ const GlobalStyles = createGlobalStyle`
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Head>
         <meta key="charset" name="charset" content="utf-8" />
         <meta
@@ -43,7 +44,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       </Head>
       <GlobalStyles />
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   )
 }
 
