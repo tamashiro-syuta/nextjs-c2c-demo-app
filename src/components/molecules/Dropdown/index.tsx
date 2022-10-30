@@ -179,6 +179,7 @@ const Dropdown = (props: DropdownProps) => {
         hasEroor={hasError}
         onMouseDown={handleMouseDown}
         onTouchEnd={handleMouseDown}
+        data-testid="dropdown-control"
       >
         {/* アイテムが選択されている時は、それを表示 */}
         {selectedItem && (
@@ -207,6 +208,7 @@ const Dropdown = (props: DropdownProps) => {
               key={idx}
               onMouseDown={(e) => handleSelectValue(e, item)}
               onClick={(e) => handleSelectValue(e, item)}
+              data-testid="dropdown-option"
             >
               <DropdownItem item={item} />
             </DropdownOption>
