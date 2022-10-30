@@ -1,5 +1,5 @@
 // 商品のカテゴリ
-export type Category = 'shoes' | 'clothes' | 'book'
+export type Category = 'shoes' | 'clothes' | 'books'
 
 // 商品の状態
 export type Condition = 'new' | 'used'
