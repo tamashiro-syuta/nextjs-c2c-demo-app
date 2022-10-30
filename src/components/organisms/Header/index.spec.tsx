@@ -5,7 +5,7 @@ import { AuthContextProvider } from 'contexts/AuthContext'
 import { theme } from 'themes'
 import type { User, Product } from 'types'
 
-// ShoppingCartContextのモック
+// ShoppingCartContextのモック(importより後に書くと、importから先に処理されて、useShoppingCartContextが呼ばれる(初期化され、呼び出したくない処理まで呼ばれる)ので、その前にモックを作成することで、初期化されるのを防ぐ、モック(偽物)をimportさせる)
 jest.mock('contexts/ShoppingCartContext')
 // eslint-disable-next-line import/order
 import { useShoppingCartContext } from 'contexts/ShoppingCartContext'
@@ -39,10 +39,13 @@ const product: Product = {
 
 describe('Header', () => {
   let renderResult: RenderResult
+  // useShoppingCartContext をモックに差し替え
   const useShoppingCartContextMock =
     useShoppingCartContext as jest.MockedFunction<typeof useShoppingCartContext>
 
   it('カートに商品が存在する', async () => {
+    // mockReturnValue => 返す値をあらかじめ設定できる(この場合、useShoppingCartContextMockが呼ばれたときに、引数に設定したオブジェクトが返る)
+    // mockReturnValueで、カートに上で定義したダミー商品を返すことで、カートに商品が存在するようにしてる
     useShoppingCartContextMock.mockReturnValue({
       cart: [product],
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -72,6 +75,7 @@ describe('Header', () => {
   })
 
   it('未サインイン', async () => {
+    // カートを空の状態で返すように設定
     useShoppingCartContextMock.mockReturnValue({
       cart: [],
       // eslint-disable-next-line @typescript-eslint/no-empty-function
