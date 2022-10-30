@@ -28,7 +28,7 @@ export type UseUser = {
 }
 
 /**
- * ユーザーAPI（ユーザーを個別で取得）のカスタムフック
+ * ユーザーAPI（ユーザーのプロフィールを個別で取得）のカスタムフック
  * @param context APIコンテキスト
  * @returns ユーザーとAPI呼び出しの状態
  */
