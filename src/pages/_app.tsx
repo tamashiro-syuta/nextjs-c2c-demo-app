@@ -33,6 +33,24 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Head>
+        {/* HeadタグのデータがWebクローラーに内容を伝え、SEOの向上に繋がる */}
+        <title>サイトのタイトルとして使われる（検索した時に出るやつ）</title>
+        <meta
+          name="description"
+          content="サイトの説明に使われる（検索した際にタイトルの下に小文字で出るやつ）"
+        />
+
+        {/* property → 「og:~~」は、OGP(Open Graph Protocol)のメタデータを定義(SNSなどでシェアする際のサムネの内容など) */}
+        <meta property="og:title" content="タイトルを指定" />
+        <meta property="og:description" content="ページの説明文を指定" />
+        <meta property="og:site_name" content="ページのサイト名を指定" />
+        <meta property="og:image" content="サムネの画像を指定" />
+        <meta property="og:url" content="ページのURLを指定" />
+        <meta
+          property="og:type"
+          content="オブジェクトのタイプ（webpage,article,videoなど）を指定（指定したタイプによって追加のメタデータが必要な場合もある）"
+        />
+
         <meta key="charset" name="charset" content="utf-8" />
         <meta
           key="viewport"
