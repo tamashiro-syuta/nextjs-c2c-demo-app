@@ -26,6 +26,32 @@ const categoryNameDict: Record<Category, string> = {
 }
 
 const SearchPage: NextPage = () => {
+  // パスくずリストをWebクローラーに認識してもらうための構造化データ(JSON-LD形式)
+  const jsonld = {
+    '@context': 'https://schema.org/',
+    '@type': 'BreadcrumbList',
+    name: 'パンくずリスト',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        item: { name: 'トップ', '@id': 'https://localhost:3000/' },
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        item: { name: '検索', '@id': 'https://localhost:3000/search' },
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        item: {
+          name: 'トップス',
+          '@id': 'https://localhost:3000/search/clothes',
+        },
+      },
+    ],
+  }
   const router = useRouter()
   // 商品のカテゴリーをクエリから取得
   const slug: Category[] = Array.isArray(router.query.slug)
